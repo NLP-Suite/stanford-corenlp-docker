@@ -34,12 +34,9 @@ COPY --from=builder /opt/corenlp .
 ADD test_api.py .
 
 ENV JAVA_XMX 4g
-ENV ANNOTATORS sentiment
-ENV TIMEOUT_MILLISECONDS 15000
-
+ENV TIMEOUT_MILLISECONDS 999999
 ENV PORT 9000
 
 EXPOSE $PORT
 
-
-CMD java -Xmx$JAVA_XMX -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -annotators "$ANNOTATORS" -port $PORT -timeout $TIMEOUT_MILLISECONDS
+CMD java -mx$JAVA_XMX -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -port $PORT -timeout $TIMEOUT_MILLISECONDS
